@@ -571,6 +571,15 @@ public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
 
     public Project getProject(int id) {
         return currentSession().get(Project.class, id);
+
+//        Query query = currentSession().createSQLQuery("SELECT * FROM tb_project WHERE id = :id");
+//        query.setInteger("id", id);
+//        List<Project> projectList = query.list();
+//        if (projectList != null && projectList.size() > 0) {
+//            return (Project) projectList.get(0);
+//        }
+//        return null;
+
     }
 
     public List<Integer> getMemberIdsOfProject(int projectId) {

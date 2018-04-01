@@ -771,6 +771,7 @@ function deepCopy(o) {
         obj.id = p.generateId();
         obj.identifier = "";
         obj.name = "";
+        obj.pisneed = "必选";//add by songtao
         obj.remark = "";
         obj.validator = "";
         obj.dataType = "";
@@ -907,6 +908,7 @@ function deepCopy(o) {
         p.name = obj.name;
         p.dataType = obj.dataType;
         p.identifier = obj.identifier;
+        p.pisneed = obj.pisneed;//add by songtao
         p.parameterList = obj.parameterList;
         p.remark = obj.remark;
         p.validator = obj.validator;
@@ -1297,13 +1299,13 @@ function deepCopy(o) {
         },
         TEMPLATE = {            // static template
 
-            "REQUEST_BEGIN"                 : "<h2>请求参数列表</h2><table class=\"table-a\"><tr class=\"head\"><td class=\"head-expander\"></td><td class=\"head-identifier\">变量名</td><td class=\"head-name\">含义</td><td class=\"head-type\">类型</td><td class=\"head-remark\">备注</td></tr>",
-            "REQUEST_BEGIN_EDIT"            : "<h2>请求参数列表</h2><table class=\"table-a\"><tr class=\"head\"><td class=\"head-expander\"></td><td class=\"head-op\">OP</td><td class=\"head-identifier\">变量名</td><td class=\"head-name\">含义</td><td class=\"head-type\">类型</td><td class=\"head-remark\">备注</td></tr>",
+            "REQUEST_BEGIN"                 : "<h2>请求参数列表</h2><table class=\"table-a\"><tr class=\"head\"><td class=\"head-expander\"></td><td class=\"head-identifier\">变量名</td><td class=\"head-pisneed\">是否必填</td><td class=\"head-name\">含义</td><td class=\"head-type\">类型</td><td class=\"head-remark\">备注</td></tr>",
+            "REQUEST_BEGIN_EDIT"            : "<h2>请求参数列表</h2><table class=\"table-a\"><tr class=\"head\"><td class=\"head-expander\"></td><td class=\"head-op\">OP</td><td class=\"head-identifier\">变量名</td><td class=\"head-pisneed\">是否必填</td><td class=\"head-name\">含义</td><td class=\"head-type\">类型</td><td class=\"head-remark\">备注</td></tr>",
             "REQUEST_END"                   : "</table>",
             "REQUEST_PARAMETER_ADD_BUTTON"  : "<div class='btns-container'><a href=\"#\" class=\"btn btn-info btn-xs\" onclick=\"ws.addParam('request'); return false;\"><i class='glyphicon glyphicon-plus'></i>添加参数</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href\"#\" class='btn btn-default btn-xs' onclick=\"ws.importJSON(true); return false;\"><i class='glyphicon glyphicon-transfer'></i>导入JSON</a></div>",
 
-            "RESPONSE_BEGIN"                : "<h2>响应参数列表</h2><table class=\"table-a\"><tr class=\"head\"><td class=\"head-expander\"></td><td class=\"head-identifier\">变量名</td><td class=\"head-name\">含义</td><td class=\"head-type\">类型</td><td class=\"head-remark\">备注</td></tr>",
-            "RESPONSE_BEGIN_EDIT"           : "<h2>响应参数列表</h2><table class=\"table-a\"><tr class=\"head\"><td class=\"head-expander\"></td><td class=\"head-op\">OP</td><td class=\"head-identifier\">变量名</td><td class=\"head-name\">含义</td><td class=\"head-type\">类型</td><td class=\"head-remark\">备注</td></tr>",
+            "RESPONSE_BEGIN"                : "<h2>响应参数列表</h2><table class=\"table-a\"><tr class=\"head\"><td class=\"head-expander\"></td><td class=\"head-identifier\">变量名</td><td class=\"head-pisneed\">是否必填</td><td class=\"head-name\">含义</td><td class=\"head-type\">类型</td><td class=\"head-remark\">备注</td></tr>",
+            "RESPONSE_BEGIN_EDIT"           : "<h2>响应参数列表</h2><table class=\"table-a\"><tr class=\"head\"><td class=\"head-expander\"></td><td class=\"head-op\">OP</td><td class=\"head-identifier\">变量名</td><td class=\"head-pisneed\">是否必填</td><td class=\"head-name\">含义</td><td class=\"head-type\">类型</td><td class=\"head-remark\">备注</td></tr>",
             "RESPONSE_END"                  : "</table>",
             "RESPONSE_PARAMETER_ADD_BUTTON" : "<div class='btns-container'><a href=\"#\" class=\"btn btn-info btn-xs\" onclick=\"ws.addParam('response'); return false;\"><i class='glyphicon glyphicon-plus'></i>添加参数</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href\"#\" class='btn btn-default btn-xs' onclick=\"ws.importJSON(); return false;\"><i class='glyphicon glyphicon-transfer'></i>导入JSON</a></div>",
 
@@ -1327,6 +1329,7 @@ function deepCopy(o) {
             "MODULE_NAME_WIDTH"          : 100,
             "PARAMETER_NAME_WIDTH"       : 160,
             "PARAMETER_IDENTIFIER_WIDTH" : 160,
+            "PARAMETER_PISNEED_WIDTH"   : 110,
             "PARAMETER_TYPE_WIDTH"       : 110,
             "PARAMETER_REMARK_WIDTH"     : 300,
             "MESSAGE_TIMEOUT"            : 5000,
@@ -1815,6 +1818,12 @@ function deepCopy(o) {
                 oldValue = b.trim(param.identifier);
                 str += getEditInputHtml(oldValue, width, CONFIG.DEFAULT_MAX_LENGTH);
                 break;
+            case "param-pisneed":
+                width = CONFIG.PARAMETER_PISNEED_WIDTH;
+                el = getTd(id, key);
+                oldValue = b.trim(param.pisneed);
+                str += getEditInputHtml(oldValue, width, CONFIG.DEFAULT_MAX_LENGTH);
+                break;
             case "param-validator":
                 el = getTd(id, key);
                 oldValue = b.trim(param.validator);
@@ -2009,12 +2018,15 @@ function deepCopy(o) {
     ws.finishEdit = function(fromOnClick) {
         if (!isEditing()) return;
         var inputDiv = b.g(ELEMENT_ID.EDIT_INPUT);
+
+
         if (!inputDiv) return;
         var editContext = stopEditing(),
             newValue = b.trim(inputDiv.value),
             needFreshAction = false,
             el;
-
+        // alert(JSON.stringify(inputDiv));
+        // alert(JSON.stringify(editContext));
         switch (editContext.key) {
             case "mt":
                 el = getDiv(editContext.id, editContext.key);
@@ -2027,6 +2039,7 @@ function deepCopy(o) {
             case "param-name":
             case "param-identifier":
             case "param-validator":
+            case "param-pisneed":
             case "param-remark":
                 el = getTd(editContext.id, editContext.key);
                 var key = editContext.key;
@@ -2406,6 +2419,8 @@ function deepCopy(o) {
         var q = "id=" + p.getId() + "&projectData=" + util.escaper.escapeInU(getProjectDataJson()) +
             "&deletedObjectListData=" + util.escaper.escapeInU(b.json.stringify(_deletedObjectList)) +
             "&versionPosition=4&description=" + (commitMsg ? commitMsg : "quick save");
+        // alert(q);
+        // alert(URL.checkIn);
             showMessage(CONST.LOADING, ELEMENT_ID.WORKSPACE_MESSAGE, MESSAGE.SAVING);
             if (!processing(ELEMENT_ID.WORKSPACE_MESSAGE)) return;
             b.ajax.post(URL.checkIn, q, function(xhr, response) {
@@ -3249,6 +3264,7 @@ function deepCopy(o) {
                 break;
             case "param-name":
             case "param-identifier":
+            case "param-pisneed":
             case "param-validator":
             case "param-remark":
                 el = getTd(context.id, context.key);
@@ -4157,6 +4173,7 @@ function deepCopy(o) {
                         param.id +  "); return false;\"><i class='glyphicon glyphicon-plus'></i></a>" : "") + "</div>", "op");
             }
             str += getPTDHtml(param.id, util.escaper.escapeInH(param.identifier), "identifier", level);
+            str += getPTDHtml(param.id, util.escaper.escapeInH(param.pisneed), "pisneed");
             str += getPTDHtml(param.id, util.escaper.escapeInH(param.name), "name");
             str += getDataTypeEditSelectHtml(param.id, param.dataType);
             // for remarkFilter, escape after filter processed...

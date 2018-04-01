@@ -79,7 +79,9 @@ public class VelocityTemplateGenerator implements Generator {
         stringBuilder.append("<font color='gray'><H2> RESPONSE PARAMETER LIST</H2></font>");
         stringBuilder.append("<div class=\"div-a\">");
         stringBuilder.append("<table class=\"table-a\"><tr class=\"head\">");
-        stringBuilder.append("<td class=\"head-identifier\">变量名</td><td class=\"head-name\">参数意义</td>");
+        stringBuilder.append("<td class=\"head-identifier\">变量名</td>");
+        stringBuilder.append("<td class=\"head-pisneed\">是否必填</td>");
+        stringBuilder.append("<td class=\"head-name\">参数意义</td>");
         stringBuilder.append("<td class=\"head-type\">参数类型</td><td class=\"head-identifier\">实际传值</td>");
         stringBuilder.append("<td class=\"head-remark\">备注</td></tr>");
 
@@ -90,6 +92,7 @@ public class VelocityTemplateGenerator implements Generator {
             for (Parameter p : action.getResponseParameterList()) {
                 stringBuilder.append("<tr>");
                 stringBuilder.append("<td class=\"td-p identifier\">" + p.getIdentifier() + "</td>");
+                stringBuilder.append("<td class=\"td-p pisneed\">" + p.getPisneed() + "</td>");
                 stringBuilder.append("<td class=\"td-p name\">" + p.getName() + "</td>");
                 stringBuilder.append("<td class=\"td-p dataType\">" + p.getDataType() + "</td>");
                 stringBuilder.append("<td class=\"td-p real\">$!" + p.getIdentifier() + "</td>");

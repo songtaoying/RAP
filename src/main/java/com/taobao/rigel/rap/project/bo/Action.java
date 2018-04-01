@@ -231,6 +231,7 @@ public class Action implements java.io.Serializable {
                 .append("<thead>")
                 .append("<th class=\"th-name\">Name</th>")
                 .append("<th class=\"th-identifier\">Identifier</th>")
+                .append("<th class=\"th-pisneed\">Pisneed</th>")
                 .append("<th class=\"th-type\">Type</th>")
                 .append("<th class=\"th-remark\">Remark</th>")
                 .append("</thead>");
@@ -245,6 +246,7 @@ public class Action implements java.io.Serializable {
                     .append("<tr class=\"tr-level-" + level + "\">")
                     .append("<td class=\"td-name\">" + levelMark(level) + StringUtils.escapeInH(p.getName()) + "</td>")
                     .append("<td class=\"td-identifier\">" + StringUtils.escapeInH(p.getIdentifier()) + "</td>")
+                    .append("<td class=\"td-pisneed\">" + StringUtils.escapeInH(p.getPisneed()) + "</td>")
                     .append("<td class=\"td-type\">" + StringUtils.escapeInH(p.getDataType()) + "</td>")
                     .append("<td class=\"td-remark\">" + StringUtils.escapeInH(p.getRemark()) + "</td>")
                     .append("</tr>");
