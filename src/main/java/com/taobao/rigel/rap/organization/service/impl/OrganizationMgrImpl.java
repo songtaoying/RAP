@@ -195,20 +195,20 @@ public class OrganizationMgrImpl implements OrganizationMgr {
         Project project = projectMgr.getProjectSummary(projectId);
         if (user.isUserInRole("admin")) {
             canAccess = true;
-        } else if (project.getUserId() == userId) {
+//        } else if (project.getUserId() == userId) {//TODO
+//            canAccess = true;
+        } else if(Role.isAdmin(roleId)) {
             canAccess = true;
-        } else if (Role.isAdmin(roleId)) {
-            canAccess = true;
-        } else {
-            List<Integer> memberIdList = projectMgr.getMemberIdsOfProject(projectId);
-            if (memberIdList != null) {
-                for (int memberId : memberIdList) {
-                    if (memberId == user.getId()) {
-                        canAccess = true;
-                        break;
-                    }
-                }
-            }
+//        } else {
+//            List<Integer> memberIdList = projectMgr.getMemberIdsOfProject(projectId);
+//            if (memberIdList != null) {
+//                for (int memberId : memberIdList) {
+//                    if (memberId == user.getId()) {
+//                        canAccess = true;
+//                        break;
+//                    }
+//                }
+//            }
         }
 
         CacheUtils.put(cacheKey, new Boolean(canAccess).toString());

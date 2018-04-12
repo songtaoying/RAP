@@ -771,7 +771,7 @@ function deepCopy(o) {
         obj.id = p.generateId();
         obj.identifier = "";
         obj.name = "";
-        obj.pisneed = "必选";//add by songtao
+        obj.pisneed = "";//add by songtao
         obj.remark = "";
         obj.validator = "";
         obj.dataType = "";
