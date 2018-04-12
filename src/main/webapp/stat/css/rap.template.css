@@ -352,36 +352,36 @@ div#tipDiv {
     line-height: 14px;
 }
 
-.helper-tip {
-    display: none;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    cursor: pointer;
-}
+/*.helper-tip {*/
+    /*display: none;*/
+    /*position: fixed;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*cursor: pointer;*/
+/*}*/
 
-.helper-tip.anim {
-    -webkit-transition: all .5s;
-    transition: all .5s;
-}
+/*.helper-tip.anim {*/
+    /*-webkit-transition: all .5s;*/
+    /*transition: all .5s;*/
+/*}*/
 
-.helper-tip.part {
-    right: -23px;
-    bottom: -33px;
-}
+/*.helper-tip.part {*/
+    /*right: -23px;*/
+    /*bottom: -33px;*/
+/*}*/
 
-.helper-tip:hover, .helper-tip.part:hover {
-    right: 0;
-    bottom: 0;
-}
+/*.helper-tip:hover, .helper-tip.part:hover {*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+/*}*/
 
-.helper-tip .mask {
-    display: none;
-}
+/*.helper-tip .mask {*/
+    /*display: none;*/
+/*}*/
 
-.helper-tip:hover .mask {
-    display: block;
-}
+/*.helper-tip:hover .mask {*/
+    /*display: block;*/
+/*}*/
 
 .messages-trigger .label {
     display: none;
