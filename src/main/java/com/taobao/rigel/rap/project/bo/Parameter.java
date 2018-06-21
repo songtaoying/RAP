@@ -13,6 +13,7 @@ public class Parameter implements java.io.Serializable {
     private String identifierChange;
     private String remarkChange;
     private String dataType;
+    private String pisneed;
     private String remark;
     private Set<Action> actionRequestList = new HashSet<Action>();
     private Set<Action> actionResponseList = new HashSet<Action>();
@@ -172,6 +173,8 @@ public class Parameter implements java.io.Serializable {
         setDataType(parameter.getDataType());
         setIdentifier(parameter.getIdentifier());
         setName(parameter.getName());
+        setPisneed(parameter.getPisneed());
+
         setRemark(parameter.getRemark());
         setValidator(parameter.getValidator());
     }
@@ -203,6 +206,8 @@ public class Parameter implements java.io.Serializable {
         stringBuilder.append("\"identifier\":\""
                 + StringUtils.escapeInJ(getIdentifier()) + "\",");
         stringBuilder.append("\"name\":\"" + StringUtils.escapeInJ(getName())
+                + "\",");
+        stringBuilder.append("\"pisneed\":\"" + StringUtils.escapeInJ(getPisneed())
                 + "\",");
         stringBuilder.append("\"remark\":\""
                 + StringUtils.escapeInJ(getRemark()) + "\",");
@@ -251,5 +256,11 @@ public class Parameter implements java.io.Serializable {
         return this.getMockJsRules() != null;
     }
 
+    public String getPisneed() {
+        return pisneed;
+    }
 
+    public void setPisneed(String pisneed) {
+        this.pisneed = pisneed;
+    }
 }

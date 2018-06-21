@@ -510,6 +510,25 @@ public class WorkspaceMgrImpl implements WorkspaceMgr {
                 // ignore
             }
         }
+
+
+        if (!parameterA.getPisneed().equals(parameterB.getPisneed())) {
+            boolean aChanged = (!parameterA.getPisneed().equals(parameterO.getPisneed()));
+            boolean bChanged = (!parameterB.getPisneed().equals(parameterO.getPisneed()));
+
+            if (aChanged && bChanged) {
+                // [TODO] conflict!
+            } else if (aChanged && !bChanged) {
+                // update
+                log.append(logTemplate(parameterB.getId(), "parameter", "update",
+                        parameterA.getPisneed(), parameterB.getPisneed(), "pisneed"));
+                parameterB.setPisneed(parameterA.getPisneed());
+            } else if (!aChanged && bChanged) {
+                // ignore
+            }
+        }
+
+
         if (!parameterA.getDataType().equals(parameterB.getDataType())) {
             boolean aChanged = (!parameterA.getDataType().equals(parameterO.getDataType()));
             boolean bChanged = (!parameterB.getDataType().equals(parameterO.getDataType()));
